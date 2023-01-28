@@ -1,7 +1,7 @@
 let modInfo = {
-	name: "The ??? Tree",
-	id: "mymod",
-	author: "nobody",
+	name: "The Mix Tree",
+	id: "catfish_brokentree",
+	author: "catfish",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
@@ -18,15 +18,15 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v1.0</h3><br>
+		- Added 3 layers.<br>
+		- Endgame at unlocking 4th layer, ~1e103 point.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "onHover", "doUncryReset", "startRGCI"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -42,16 +42,39 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	if (!hasUpgrade("p", 11)) return d(0)
+
+	let gain = upgradeEffect("p", 11)
+	gain = gain.mul(tmp.d.crystalEffect)
+	
+	if (hasUpgrade("d", 45)) {
+		gain = gain.mul(upgradeEffect("d", 45))
+	}
+
+	if (hasMilestone("g", 0)) {
+		gain = gain.mul(tmp.g.gh1Effect)
+	}
+
+	gain = gain.mul(tmp.g.sEff)
+	gain = gain.mul(tmp.g.bhEff)
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
+	paused: false
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
+	function() {
+		if (player.paused) {
+			return "Game paused (press w to resume)"
+		}
+	},
+	function() {
+		return `Current endgame: unlock the 4th layer`
+	}
 ]
 
 // Determines when the game "ends"

@@ -319,6 +319,7 @@ function autobuyUpgrades(layer){
 }
 
 function gameLoop(diff) {
+	if (player.paused) return ;
 	if (isEndgame() || tmp.gameEnded){
 		tmp.gameEnded = true
 		clearParticles()

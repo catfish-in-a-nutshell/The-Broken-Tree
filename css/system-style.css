@@ -138,6 +138,23 @@ td {
 	transition:color none
 }
 
+.col.left {
+	min-width: 29.5%;
+	max-width: 29.5%;
+	width: 29.5%;
+}
+
+.col.right {
+	min-width: 69.5%;
+	max-width: 69.5%;
+	width: 69.5%;
+}
+
+.col.right.fullWidth {
+	width: 100%;
+	min-width: 100%;
+}
+
 .col.right {
 	top: 0;
 	right: 0;

@@ -212,7 +212,8 @@ function load() {
 	setupTemp();
 	updateTemp();
 	updateTemp();
-	updateTabFormats()
+	updateTabFormats();
+	loadCustomComponents();
 	loadVue();
 }
 

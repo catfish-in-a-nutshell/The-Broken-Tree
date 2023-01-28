@@ -1,0 +1,227 @@
+.syn-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    min-height: 35px;
+    color: cyan;
+}
+
+.syn-name {
+    width: 7em;
+}
+
+.syn-amount {
+    width: 10em;
+}
+
+.synbutton {
+    min-height: 30px;
+    color: white;
+    width: 15em;
+    border-radius: 8px;
+    border: 1px solid white;
+    background-color: #171717;
+    cursor: default;
+    transition-duration: 0.05s;
+}
+
+.synbutton.canbuy {
+    background-color: #555;
+}
+
+.synbutton.canbuy:hover {
+    background-color: #333;
+}
+
+.synbutton .bought {
+    background-color: cyan;
+    color: #171717;
+}
+
+.syn-effect {
+
+}
+
+
+.could {
+	cursor: pointer;
+    background-color: #c5c5c5;
+}
+
+.could:hover {
+	box-shadow: 0 0 20px var(--points);
+	background-color: #eee;
+    /* background-color: red; */
+}
+
+.grass-container {
+    margin-top: 30px;
+    background-color: rgba(255, 255, 255, 0.233);
+}
+
+.grassfont {
+    font-family: Roboto;
+    table-align: center;
+    text-align: center;
+    color: white;
+    text-shadow: #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px, #000 0px 0px 3px;
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+    font-weight: normal ;
+}
+
+
+.grass-hop-row {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    height: 300px;
+}
+
+.uncrystalize-row {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    height: 90px;
+    background-color: #97245a99;
+}
+
+.rgci-row {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    height: 144px;
+    background-color: #18683499;
+}
+
+.left-box {
+    width: 33%;
+    height: 100%;
+    margin: 0;
+}
+
+.grass-box-inner {
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    border: solid 2px black;
+    background-color: #c5c5c5;
+    margin: 10px;
+}
+
+.right-box {
+    width: 67%;
+    height: 100%;
+}
+
+.right-container {
+    margin: 10px;
+    height: calc(100% - 20px);
+}
+
+
+.gh-milestones {
+    width: calc(100% - 4px);
+    height: calc(100% - 32px);
+    border: solid 2px black;
+    background-color: #272727;
+    overflow-y: auto;
+    margin: 5px 0px 0px 0px;
+}
+
+.gh-milestones::-webkit-scrollbar-thumb {
+    background-color: #b6b6b6;
+    border-radius: 10px;
+}
+
+.gh-milestones::-webkit-scrollbar {
+    width: 10px;
+}
+.gh-milestones::-webkit-scrollbar-track {
+    background-color: #0000;
+}
+
+.gras-shop-row {
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    height: 400px;
+    background: #000115;
+}
+
+.gsupg {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #5151ec;
+    background-color: transparent;
+    border: 0.2rem solid #5151ec;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    transition-duration: 0.1s;
+    width: 300px;
+    height: 120px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gsupg span {
+    transition-duration: 0s;
+}
+
+.gscan:hover {
+    background-color: #5151ec;
+    color: black;
+}
+
+.gsbought {
+    background-color: #5151ec;
+    color: black;
+}
+
+.gras-shop-row div {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.gras-res {
+    color: #888888;
+    height: auto;
+    background-color: #000115;
+}
+
+.gslocked {
+	cursor: not-allowed;
+}
+
+.rmbar-row {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    height: 115px;
+    background: #000115;
+}
+
+.gsfill {
+    background-color: transparent;
+    color: #5151ec;
+    border: 0.2rem solid #5151ec;
+    border-radius: 0.5rem;
+    width: 10rem;
+    font-size: 2rem;
+    margin-left: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 0.5rem;
+    min-height: 70px;
+    transition-duration: 0s;
+}
+
+.gsfill.colored {
+    background-color: #5151ec;
+    color: black;
+    border: "0.2rem solid #5151ec";
+}

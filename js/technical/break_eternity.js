@@ -2740,3 +2740,6 @@ for (var i = 0; i < 10; ++i)
   return Decimal;
 
 }));
+
+
+function d(n) { return new Decimal(n) }
