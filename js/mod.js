@@ -17,7 +17,19 @@ let VERSION = {
 	name: "Literally nothing",
 }
 
-let changelog = `<h1>Changelog:</h1><br>
+let changelog = `
+	<h1>References:</h1><br>
+	<div><a class="link" href="https://store.steampowered.com/app/1399720/Antimatter_Dimensions/">Antimatter Dimensions</a> by Hevipelle</div><br>
+	<div><a class="link" href="https://mrredshark77.github.io/Really-Grass-Cutting-Incremental/">RGCI</a> by MrRedshark77<div><br>
+	<div><a class="link" href="https://pseudo-corp.github.io/SynergismOfficial/">Synergism</a> by Pseudonian and other developers</div>
+	<br><br>
+
+	<h1>Changelog:</h1><br><br>
+
+	<h3>Real v1.0</h3><br>
+	- Added the 4th layer.<br>
+	- Endgame at breaking the tree.<br><br>
+
 	<h3>v1.0</h3><br>
 		- Added 3 layers.<br>
 		- Endgame at unlocking 4th layer, ~1e103 point.`
