@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="css/system-style.css" />
 	<link rel="stylesheet" type="text/css" href="css/bars.css" />
 	<link rel="stylesheet" type="text/css" href="css/custom-components.css" />
+	<link rel="stylesheet" type="text/css" href="css/broken.css" />
 	<link rel="stylesheet" type="text/css" href="css/components.css" />
 	<link rel="stylesheet" type="text/css" href="css/general-style.css" />
 	<link rel="stylesheet" type="text/css" href="css/misc.css" />
@@ -41,6 +42,7 @@
 
 
 <body onload="load()" onmousemove="updateMouse(event)">
+	<div class="global-filter"></div>
 	<div id="app">
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 

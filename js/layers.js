@@ -161,7 +161,8 @@ addLayer("p", {
         return cnt
     },
 
-    layerShown(){return true}
+    layerShown(){ return !player.broken },
+    deactivated: () => player.broken
 })
 
 
@@ -218,7 +219,7 @@ addLayer("d", {
         {key: "d", description: "D: Reset for diamonds", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 
-    layerShown: () => hasUpgrade("p", 31) || player.d.best.gt(0) || player.g.best.gt(0),
+    layerShown: () => (hasUpgrade("p", 31) || player.d.best.gt(0) || player.g.best.gt(0)) && !player.broken,
 
     buyables: {
         11: {
@@ -549,7 +550,9 @@ addLayer("d", {
         }
     },
 
-    branches: ["p"]
+    branches: ["p"],
+    
+    deactivated: () => player.broken
 })
 
 const MAX_GRAS = d(1e24)
@@ -859,7 +862,7 @@ addLayer("g", {
         return prog.toNumber()
     },
 
-    layerShown: () => hasUpgrade("p", 43) || player.g.best.gte(1),
+    layerShown: () => (hasUpgrade("p", 43) || player.g.best.gte(1)) && !player.broken,
     branches: ["d"],
 
     tabFormat: [
@@ -941,8 +944,61 @@ addLayer("g", {
         if (tmp.g.filled && player.g.filling) {
             player.g.filling = false
         }
-    }
+    },
+    deactivated: () => player.broken
 })
+
+function constructRThings() {
+    let tabformat = []
+    let infoboxes = {}
+    let milestones = {}
+    for (let i = 0; i < 50; i++) {
+        tabformat.push(["infobox", "i"+i])
+        infoboxes["i"+i] = {
+            title: "LEAVE.",
+            body() {
+                return "CLOSE THIS WEBPAGE NOW.<br>CLOSE THIS WEBPAGE NOW.<br>CLOSE THIS WEBPAGE NOW."
+            },
+            unlocked: () => (player.r.keepGoing > 2 || (player.r.keepGoing == 2 && tmp.r.keepGoingText2.next)),
+            bodyStyle: {
+                "padding": "10px",
+                "color": "crimson",
+                "text-shadow": "2px 2px 2px crimson, -3px -1px 3px crimson, 2px -7px 10px crimson",
+                "box-shadow": "crimson 3px 4px 6px, crimson 3px 4px 6px"
+            },
+            style: {
+                "border-color": "crimson",
+                "border-radius": 0,
+            },
+            titleStyle: {
+                "background-color": "crimson",
+                "border-radius": 0
+            }
+        }
+    }
+    
+    for (let i = 0; i < 50; i++) {
+        milestones[i] = {
+            requirementDescription: "PLEASE LEAVE.",
+            effectDescription: "please close this webpage.",
+            done() {
+                return tmp.r.keepGoingText3.next && (player.r.keepGoingTimer - 10) * 5 > this.id
+            }
+        }
+    }
+    tabformat.push("the-reality")
+
+    return {
+        "tabformat": tabformat,
+        "infoboxes": infoboxes,
+        "milestones": milestones
+    }
+}
+
+let RThings = constructRThings()
+let realityTabformat = RThings["tabformat"]
+let realityInfoboxes = RThings["infoboxes"]
+let realityMilestones = RThings["milestones"]
 
 addLayer("r", {
     name: "reality",
@@ -953,6 +1009,11 @@ addLayer("r", {
         return {
             unlocked: false,
             points: d(0),
+            inreality: false,
+            truths: 0,
+            keepGoing: 0,
+            keepGoingTimer: 0,
+            brokenPlayed: false
         }
     },
     requires: d(23),
@@ -961,9 +1022,109 @@ addLayer("r", {
     baseAmount() { return player.g.points },
     type: "normal",
     exponent: 0.5,
-    layerShown: () => hasUpgrade("g", 23),
-    tabFormat: [],
+    layerShown: () => hasUpgrade("g", 23) && !player.broken,
+    tabFormat: realityTabformat,
     row: 3,
 
-    branches: ["g"]
+    enterReality() {
+        player.r.inreality = true
+    },
+
+    nextTruth() {
+        if (player.r.truths < 4) {
+            player.r.truths += 1 
+        }
+    },
+
+    keepGoing() {
+        player.r.keepGoingTimer = 0
+        player.r.keepGoing = player.r.keepGoing + 1
+    },
+
+    truthButtonText() {
+        if (player.r.truths == 0) return `Tell me the truth.`
+        if (player.r.truths == 1 || player.r.truths == 2) return `Tell me more truth.`
+        
+        if (player.r.truths == 3) return `REACH THE ENDGAME.`
+    },
+
+    keepGoingTextChoice(texts, id) {
+        if (!texts) return undefined
+        let l = texts.length
+        let lines = 0
+        if (player.r.keepGoing > id) lines = l
+        if (player.r.keepGoing == id) {
+            lines = Math.ceil(player.r.keepGoingTimer / 2)
+            lines = Math.min(lines, l)
+        }
+        res = ""
+        for (let i = 0; i < lines; i++) {
+            res += texts[i] + "<br>"
+        }
+        return {"text": res, "next": player.r.keepGoing == id && lines == l, "prog": lines}
+    },
+
+    keepGoingText1() {
+        let texts = [
+            "... what.",
+            "KEEP GOING for what?",
+            "Look, this stupid game is over. Nothing to expect.",
+            "I just run out of ideas for this game.",
+            "Leave this webpage, now."
+        ]
+        return layers.r.keepGoingTextChoice(texts, 1)
+    },
+
+    keepGoingText2() {
+        let texts = [
+            "I have told you to leave.",
+            "NOW. AND. NEVER. COME. BACK.",
+            "Why don't you listen?",
+            "Just leave this webpage.",
+            ""
+        ]
+        return layers.r.keepGoingTextChoice(texts, 2)
+    },
+    
+    keepGoingText3() {
+        let texts = [
+            "You just can't give up don't you.",
+            "Do I need to beg you?",
+            "My game is just bad. You shouldn't play this.",
+            "Please... please leave this webpage.",
+            ""
+        ]
+        return layers.r.keepGoingTextChoice(texts, 3)
+    },
+
+    keepGoingText4() {
+        let texts = [
+            "Okay.",
+            "If you don't want to give up,",
+            "If you want to stay in this game,",
+            "Then....",
+            "I WILL FORCE YOU TO QUIT.",
+            ""
+        ]
+        return layers.r.keepGoingTextChoice(texts, 4)
+    },
+
+    infoboxes: realityInfoboxes,
+    milestones: realityMilestones,
+    branches: ["g"],
+
+    update(diff) {
+        player.r.keepGoingTimer += diff
+        console.log(tmp.r.keepGoingText2.prog)
+        if (tmp.r.keepGoingText2.prog == 4) {
+            document.getElementsByClassName('right').item(0).scrollTop = 0
+        }
+
+        if (tmp.r.keepGoingText4.next && !player.r.brokenPlayed) {
+            player.r.brokenPlayed = true
+            brokeAnimation()
+        }
+    },
+
+    deactivated: () => player.broken
 })

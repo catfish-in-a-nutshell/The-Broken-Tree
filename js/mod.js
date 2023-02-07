@@ -3,7 +3,7 @@ let modInfo = {
 	id: "catfish_brokentree",
 	author: "catfish",
 	pointsName: "points",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["layers.js", "tree.js", "broken.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -22,11 +22,11 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Added 3 layers.<br>
 		- Endgame at unlocking 4th layer, ~1e103 point.`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `Congratulations! You have reached the end and beaten this game.<br>Please close this webpage now.`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "onHover", "doUncryReset", "startRGCI"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "onHover", "doUncryReset", "startRGCI", "enterReality", "nextTruth", "keepGoing"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -41,28 +41,32 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
+	let gain = d(0)
+	if (!player.broken) {
+		if (!hasUpgrade("p", 11)) return d(0)
 
-	if (!hasUpgrade("p", 11)) return d(0)
+		gain = upgradeEffect("p", 11)
+		gain = gain.mul(tmp.d.crystalEffect)
+		
+		if (hasUpgrade("d", 45)) {
+			gain = gain.mul(upgradeEffect("d", 45))
+		}
 
-	let gain = upgradeEffect("p", 11)
-	gain = gain.mul(tmp.d.crystalEffect)
-	
-	if (hasUpgrade("d", 45)) {
-		gain = gain.mul(upgradeEffect("d", 45))
+		if (hasMilestone("g", 0)) {
+			gain = gain.mul(tmp.g.gh1Effect)
+		}
+
+		gain = gain.mul(tmp.g.sEff)
+		gain = gain.mul(tmp.g.bhEff)
+		return gain
 	}
-
-	if (hasMilestone("g", 0)) {
-		gain = gain.mul(tmp.g.gh1Effect)
-	}
-
-	gain = gain.mul(tmp.g.sEff)
-	gain = gain.mul(tmp.g.bhEff)
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
-	paused: false
+	paused: false,
+	broken: false
 }}
 
 // Display extra things at the top of the page
@@ -73,7 +77,10 @@ var displayThings = [
 		}
 	},
 	function() {
-		return `Current endgame: unlock the 4th layer`
+		if (player.broken)
+			return `You have reached the current Endgame!
+			 Please wait for a future update`
+		return `Current endgame: break the tree`
 	}
 ]
 

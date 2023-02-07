@@ -18,8 +18,11 @@ function constructNodeStyle(layer){
 		style.push({'background-color': tmp[layer].color})
 	if (tmp[layer].image !== undefined)
 		style.push({'background-image': 'url("' + tmp[layer].image + '")'})
-	if(tmp[layer].notify && player[layer].unlocked)
+	if((tmp[layer].notify && player[layer].unlocked) && !tmp[layer].shadow)
 		style.push({'box-shadow': 'var(--hqProperty2a), 0 0 20px ' + tmp[layer].trueGlowColor})
+	if (tmp[layer].shadow) {
+		style.push(tmp[layer].shadow)
+	}
 	style.push(tmp[layer].nodeStyle)
     return style
 }

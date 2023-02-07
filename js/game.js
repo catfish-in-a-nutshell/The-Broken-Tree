@@ -394,6 +394,14 @@ function hardReset(resetOptions) {
 
 var ticking = false
 
+
+function metaChecks() {
+	if (player.broken) {
+		modInfo.name = "The Broken Tree"
+		document.title = modInfo.name
+	}
+}
+
 var interval = setInterval(function() {
 	if (player===undefined||tmp===undefined) return;
 	if (ticking) return;
@@ -412,6 +420,9 @@ var interval = setInterval(function() {
 		if (!options.offlineProd || player.offTime.remain <= 0) player.offTime = undefined
 	}
 	if (player.devSpeed) diff *= player.devSpeed
+
+	if (!player.broken) diff *= 1.2
+	
 	player.time = now
 	if (needCanvasUpdate){ resizeCanvas();
 		needCanvasUpdate = false;
@@ -425,6 +436,8 @@ var interval = setInterval(function() {
 	fixNaNs()
 	adjustPopupTime(trueDiff)
 	updateParticles(trueDiff)
+
+	metaChecks()
 	ticking = false
 }, 50)
 

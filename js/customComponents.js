@@ -213,4 +213,70 @@ function loadCustomComponents() {
             </div>
         `
     })
+
+    Vue.component('the-reality', {
+		props: ['layer', 'data'],
+		template: `
+        <div>
+            <div v-if="!player.r.inreality" v-on:click="layers.r.enterReality()" class="enter-reality">
+                ENTER<br>THE<br>REALITY
+                <div class="reality-icon"><div>Ω</div></div>
+            </div>
+            <div v-if="player.r.inreality" class="reality-quotes">
+                <div class="truth">
+                    Welcome to the Reality Layer.<br>
+                    I will tell you the TRUTH.
+
+                </div>
+
+                <div v-if="player.r.truths >= 1" class="truth">
+                    The TRUTH is: <br>
+                    This is a trash game, and you have wasted {{formatTime(player.timePlayed)}} on it.<br>
+                    This is the <b style="color:crimson">REALITY</b> you wanted.<br>
+                    You should just stop playing this.
+
+                </div>
+                <div v-if="player.r.truths >= 2" class="truth">
+                    All things in this so-called-game are stolen from other games. Nothing original.<br>
+                    All those upgrades and mechanics are meaningless, stupid and make no sense at all.<br>
+                    There is no actual gameplay in this so-called-game.<br>
+                    You should just stop playing this.<br>
+                    This is the best choice.
+
+                </div>
+                <div v-if="player.r.truths >= 3" class="truth">
+                    Seriously, why don't you just close the webpage?<br>
+                    You have better things to do. IN YOUR REAL LIFE.<br>
+                    Is it because you haven't seen the endgame page?<br>
+                    Alright then, if you want an endgame, let me give it to you.
+                </div>
+                <div v-if="player.r.truths < 4" class="truth-button" v-on:click="layers.r.nextTruth()">
+                    {{tmp.r.truthButtonText}}
+                </div>
+                <div v-if="player.r.truths >= 4">
+                    <h2>The Mix Tree v1.0</h2><br><br>
+                    <h3 v-html="modInfo.winText"></h3><br>
+                    <br>
+                    <div v-if="!player.timePlayedReset">It took you {{formatTime(player.timePlayed)}} to beat the game.</div>
+                    <br>
+                    <button class="longUpg can" onclick="layers.r.keepGoing()" v-if="player.r.keepGoing == 0">Keep Going</button>
+                </div>
+
+                <div v-if="player.r.keepGoing >= 1">
+                    <div class="truth" v-html="tmp.r.keepGoingText1.text"></div>          
+                    <button class="longUpg can" onclick="layers.r.keepGoing()" v-if="tmp.r.keepGoingText1.next">Keep Going</button>
+                    
+                    <div class="truth" v-html="tmp.r.keepGoingText2.text"></div>          
+                    <button class="longUpg can" onclick="layers.r.keepGoing()" v-if="tmp.r.keepGoingText2.next">Keep Going</button>        
+                    
+                    <div class="truth" v-html="tmp.r.keepGoingText3.text"></div>          
+                    <button class="longUpg can" onclick="layers.r.keepGoing()" v-if="tmp.r.keepGoingText3.next">Keep Going</button>
+                    
+                    <div class="truth" v-html="tmp.r.keepGoingText4.text"></div>  
+                </div>
+                      
+            </div>
+        </div>
+		`
+    })
 }

@@ -26,6 +26,10 @@
     transition-duration: 0.05s;
 }
 
+.canbuy {
+    cursor: pointer;
+}
+
 .synbutton.canbuy {
     background-color: #555;
 }
@@ -172,6 +176,10 @@
     transition-duration: 0s;
 }
 
+.gscan {
+    cursor: pointer;
+}
+
 .gscan:hover {
     background-color: #5151ec;
     color: black;
@@ -224,4 +232,89 @@
     background-color: #5151ec;
     color: black;
     border: "0.2rem solid #5151ec";
+}
+
+.enter-reality {
+    width: 16rem;
+    align-self: center;
+    font-family: Typewriter;
+    font-size: 2rem;
+    padding: 1rem;
+    transition-duration: .4s;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    border: 0.2rem solid crimson;
+}
+
+.enter-reality:hover {
+    --bg-color: crimson;
+    --text-color: black;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+.enter-reality:not(:hover) {
+    --bg-color: black;
+    --text-color: crimson;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    box-shadow: 0px 0px 15px crimson;
+}
+
+.reality-icon {
+    margin-top: 10px;
+
+    font-size: 8rem;
+    border: 0.2rem solid var(--text-color);
+    width: 10rem;
+    height: 10rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    text-shadow: 0px 8px 25px var(--text-color)
+}
+
+.reality-quotes {
+    width: 40rem;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 0.2rem solid crimson;
+    padding: 2rem;
+}
+
+.truth-button {
+    width: 16rem;
+    align-self: center;
+    font-size: 1rem;
+    padding: 10px;
+    transition-duration: .4s;
+    cursor: pointer;
+    border-radius: 0;
+    border: 0.1rem solid crimson;
+}
+
+.truth-button:hover {
+    --bg-color: crimson;
+    --text-color: black;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+.truth-button:not(:hover) {
+    --bg-color: black;
+    --text-color: crimson;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    box-shadow: 0px 0px 15px crimson;
+}
+
+.truth {
+    line-height: 20px;
+    color: #ccc;
+    font-size: 15px;
+    text-shadow: 0px 0px 12px crimson;
+    margin: 10px;
 }
